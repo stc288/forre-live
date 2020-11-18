@@ -1,0 +1,425 @@
+@echo off
+title Minecraft Demo Tool - Beta 1.9.01
+cd "%temp%"
+if EXIST uninstall exit
+cd "C:\Users\%username%\AppData\Roaming\.minecraft\saves"
+if NOT EXIST Config.dll goto firstTime
+set /p currentThemeSelected=< theme
+if %currentThemeSelected%==Default color 07
+if %currentThemeSelected%==Red color 04
+if %currentThemeSelected%==Green color 02
+if %currentThemeSelected%==Blue color 01
+
+:mainReal
+set /p currentLoadedWorld=< Config.dll
+set /p nicknameWorld1=<w1
+set /p nicknameWorld2=<w2
+set /p nicknameWorld3=<w3
+set /p nicknameWorld4=<w4
+set /p nicknameWorld5=<w5
+cls
+echo Welcome to the Minecraft demo management tool!
+echo What would you like to do?
+echo.
+echo.
+echo 1 = Load / switch worlds
+echo 2 = Reset a world
+echo 3 = Rename a world
+echo 4 = Enter the settings menu
+echo.
+set /p mainSelect=">"
+if %mainSelect%==1 goto mainLoadWorld
+if %mainSelect%==2 goto mainResetWorld
+if %mainSelect%==3 goto mainRenameWorld
+if %mainSelect%==4 goto mainSettings1
+cls
+echo Invalid selection!
+timeout /t 2 >nul
+goto mainReal
+
+:mainLoadWorld
+set /p currentLoadedWorld=< Config.dll
+set /p nicknameWorld1=<w1
+set /p nicknameWorld2=<w2
+set /p nicknameWorld3=<w3
+set /p nicknameWorld4=<w4
+set /p nicknameWorld5=<w5
+cls
+echo What world would you like to load?
+echo Currently, world %currentLoadedWorld%is loaded.
+echo.
+echo.
+echo None = Make no world loaded
+echo 1 = Switch to world %nicknameWorld1%
+echo 2 = Switch to world %nicknameWorld2%
+echo 3 = Switch to world %nicknameWorld3%
+echo 4 = Switch to world %nicknameWorld4%
+echo 5 = Switch to world %nicknameWorld5%
+echo.
+set /p loadWorldSelect=">"
+if %loadWorldSelect%==None goto switchTo6
+if %loadWorldSelect%==none goto switchTo6
+if %loadWorldSelect%==1 goto switchTo1
+if %loadWorldSelect%==2 goto switchTo2
+if %loadWorldSelect%==3 goto switchTo3
+if %loadWorldSelect%==4 goto switchTo4
+if %loadWorldSelect%==5 goto switchTo5
+cls
+echo Invalid selection!
+timeout /t 2 >nul
+goto mainLoadWorld
+
+
+:mainResetWorld
+set /p currentLoadedWorld=< Config.dll
+set /p nicknameWorld1=<w1
+set /p nicknameWorld2=<w2
+set /p nicknameWorld3=<w3
+set /p nicknameWorld4=<w4
+set /p nicknameWorld5=<w5
+cls
+echo What world would you like to reset?
+echo Currently, world %currentLoadedWorld%is loaded.
+echo Note : Trying to reset the currently loaded world will do nothing.
+echo.
+echo.
+echo 1 = Reset world %nicknameWorld1%
+echo 2 = Reset world %nicknameWorld2%
+echo 3 = Reset world %nicknameWorld3%
+echo 4 = Reset world %nicknameWorld4%
+echo 5 = Reset world %nicknameWorld5%
+echo.
+set /p resetWorldSelect=">"
+if %resetWorldSelect%==1 goto delete1
+if %resetWorldSelect%==2 goto delete2
+if %resetWorldSelect%==3 goto delete3
+if %resetWorldSelect%==4 goto delete4
+if %resetWorldSelect%==5 goto delete5
+cls
+echo Invalid selection!
+timeout /t 2 >nul
+goto mainResetWorld
+
+
+:mainRenameWorld
+set /p currentLoadedWorld=< Config.dll
+set /p nicknameWorld1=<w1
+set /p nicknameWorld2=<w2
+set /p nicknameWorld3=<w3
+set /p nicknameWorld4=<w4
+set /p nicknameWorld5=<w5
+cls
+echo What world would you like to rename?
+echo Currently, world %currentLoadedWorld%is loaded.
+echo Note : Trying to rename the currently loaded world will do nothing.
+echo.
+echo.
+echo 1 = Set / change the nickname for world %nicknameWorld1%
+echo 2 = Set / change the nickname for world %nicknameWorld2%
+echo 3 = Set / change the nickname for world %nicknameWorld3%
+echo 4 = Set / change the nickname for world %nicknameWorld4%
+echo 5 = Set / change the nickname for world %nicknameWorld5%
+echo.
+set /p renameWorldSelect=">"
+if %renameWorldSelect%==1 goto rename1
+if %renameWorldSelect%==2 goto rename2
+if %renameWorldSelect%==3 goto rename3
+if %renameWorldSelect%==4 goto rename4
+if %renameWorldSelect%==5 goto rename5
+cls
+echo Invalid selection!
+timeout /t 2 >nul
+goto mainRenameWorld
+
+
+:mainSettings1
+cls
+echo Welcome to the settings menu!
+echo What would you like to change?
+echo Note : Work in progress.
+echo.
+echo.
+echo 1 = Set theme to default
+echo 2 = Set theme to red
+echo 3 = Set theme to green
+echo 4 = Set theme to blue
+echo.
+echo --------------------------------------------
+echo.
+echo 5 = Uninstall the tool
+echo.
+set /p settings1Select=">"
+if %settings1Select%==1 goto themeDefault
+if %settings1Select%==2 goto themeRed
+if %settings1Select%==3 goto themeGreen
+if %settings1Select%==4 goto themeBlue
+if %settings1Select%==5 goto uninstallPrompt
+cls
+echo Invalid selection!
+timeout /t 2 >nul
+goto mainSettings1
+
+:themeSucess
+cls
+echo Theme sucessfully changed!
+echo Do you want to return to the main menu? (Y/N)
+set /p returnMainTheme=">"
+if %returnMainTheme%==y goto mainReal
+if %returnMainTheme%==Y goto mainReal
+exit
+
+:themeDefault
+color 07
+echo Default > theme
+goto themeSucess
+
+:themeRed
+color 04
+echo Red > theme
+goto themeSucess
+
+:themeGreen
+color 02
+echo Green > theme
+goto themeSucess
+
+:themeBlue
+color 01
+echo Blue > theme
+goto themeSucess
+
+:switchTo1
+cls
+set /p currentLoadedWorld=< Config.dll
+if %currentLoadedWorld%==1 goto sucess
+rename Demo_World temp
+rename 1 Demo_World
+rename temp %currentLoadedWorld%
+echo 1 > Config.dll
+goto sucess
+
+:switchTo2
+cls
+set /p currentLoadedWorld=< Config.dll
+if %currentLoadedWorld%==2 goto sucess
+rename Demo_World temp
+rename 2 Demo_World
+rename temp %currentLoadedWorld%
+echo 2 > Config.dll
+goto sucess
+
+:switchTo3
+cls
+set /p currentLoadedWorld=< Config.dll
+if %currentLoadedWorld%==3 goto sucess
+rename Demo_World temp
+rename 3 Demo_World
+rename temp %currentLoadedWorld%
+echo 3 > Config.dll
+goto sucess
+
+:switchTo4
+cls
+set /p currentLoadedWorld=< Config.dll
+if %currentLoadedWorld%==4 goto sucess
+rename Demo_World temp
+rename 4 Demo_World
+rename temp %currentLoadedWorld%
+echo 4 > Config.dll
+goto sucess
+
+:switchTo5
+cls
+set /p currentLoadedWorld=< Config.dll
+if %currentLoadedWorld%==5 goto sucess
+rename Demo_World temp
+rename 5 Demo_World
+rename temp %currentLoadedWorld%
+echo 5 > Config.dll
+goto sucess
+
+:switchTo6
+cls
+set /p currentLoadedWorld=< Config.dll
+if %currentLoadedWorld%==NONE goto sucess
+rename Demo_World %currentLoadedWorld%
+echo NONE > Config.dll
+goto sucess
+
+:delete1
+rd /Q /S 1
+mkdir 1
+goto sucessdel
+
+:delete2
+rd /Q /S 2
+mkdir 2
+goto sucessdel
+
+:delete3
+rd /Q /S 3
+mkdir 3
+goto sucessdel
+
+:delete4
+rd /Q /S 4
+mkdir 4
+goto sucessdel
+
+:delete5
+rd /Q /S 5
+mkdir 5
+goto sucessdel
+
+:rename1
+echo Made it.
+pause >nul
+cls
+echo What nickname would you like to apply to world %nicknameWorld1%?
+set /p setNicknameW1=">"
+echo %setNicknameW1% > w1
+cls
+echo Nickname applied!
+echo Would you like to return to the main menu? (Y/N)
+set /p returnMainW1=">"
+if %returnMainW1%==y goto mainReal
+if %returnMainW1%==Y goto mainReal
+exit
+
+:rename2
+cls
+echo What nickname would you like to apply to world %nicknameWorld2%?
+set /p setNicknameW2=">"
+echo %setNicknameW2% > w2
+cls
+echo Nickname applied!
+echo Would you like to return to the main menu? (Y/N)
+set /p returnMainW2=">"
+if %returnMainW2%==y goto mainReal
+if %returnMainW2%==Y goto mainReal
+exit
+
+:rename3
+cls
+echo What nickname would you like to apply to world %nicknameWorld3%?
+set /p setNicknameW3=">"
+echo %setNicknameW3% > w3
+cls
+echo Nickname applied!
+echo Would you like to return to the main menu? (Y/N)
+set /p returnMainW3=">"
+if %returnMainW3%==y goto mainReal
+if %returnMainW3%==Y goto mainReal
+exit
+
+:rename4
+cls
+echo What nickname would you like to apply to world %nicknameWorld4%?
+set /p setNicknameW4=">"
+echo %setNicknameW4% > w4
+cls
+echo Nickname applied!
+echo Would you like to return to the main menu? (Y/N)
+set /p returnMainW4=">"
+if %returnMainW4%==y goto mainReal
+if %returnMainW4%==Y goto mainReal
+exit
+
+:rename5
+cls
+echo What nickname would you like to apply to world %nicknameWorld5%?
+set /p setNicknameW5=">"
+echo %setNicknameW5% > w5
+cls
+echo Nickname applied!
+echo Would you like to return to the main menu? (Y/N)
+set /p returnMainW5=">"
+if %returnMainW5%==y goto mainReal
+if %returnMainW5%==Y goto mainReal
+exit
+
+:uninstallPrompt
+cls
+echo Are you sure you want to uninstall the tool? (Y/N)
+set /p brofrwhy=">"
+if %brofrwhy%==y goto uninstallReal
+if %brofrwhy%==Y goto uninstallReal
+goto mainReal
+exit
+
+:uninstallReal
+echo Please wait, uninstalling.
+timeout /t 1 >nul
+rd /Q /S 1
+rd /Q /S 2
+rd /Q /S 3
+rd /Q /S 4
+rd /Q /S 5
+del /Q Config.dll
+del /Q theme
+del /Q w1
+del /Q w2
+del /Q w3
+del /Q w4
+del /Q w5
+timeout /1 1 >nul
+cls
+echo Uninstall sucessful.
+echo All traces of the tool are gone exept the host file.
+echo (You have to delete that manually.)
+echo.
+echo Thanks for trying my program.
+echo Press any key to exit.
+pause >nul
+cd "%temp%"
+echo 1 > uninstall
+exit
+
+:firstTime
+echo Your current world wont be removed, it will just be renamed. (OriginalBackup)
+echo Do you want to continue? (Y/N)
+set /p cuntinueReal=">"
+if %cuntinueReal%==n exit
+if %cuntinueReal%==N exit
+
+if NOT EXIST 1 mkdir 1
+if NOT EXIST 2 mkdir 2
+if NOT EXIST 3 mkdir 3
+if NOT EXIST 4 mkdir 4
+if NOT EXIST 5 mkdir 5
+echo NONE > Config.dll
+echo 1 > w1
+echo 2 > w2
+echo 3 > w3
+echo 4 > w4
+echo 5 > w5
+echo Default > theme
+rename Demo_World OriginalBackup
+goto mainReal
+exit
+
+:firstTime2
+del /Q Demo_World
+goto mainReal
+exit
+
+:sucess
+cls
+echo World sucessfully changed!
+echo Press any key to exit.
+pause >nul
+exit
+
+:sucessdel
+cls
+echo World sucessfully reset!
+echo Do you want to return to the main menu? (Y/N)
+set /p returnMainDel=">"
+if %returnMainDel%==y goto mainReal
+if %returnMainDel%==Y goto mainReal
+exit
+
+
+
+
+
